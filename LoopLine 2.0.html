@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><!-- GANTI Judul Website DI SINI -->LoopLine - Make Your Charm</title>
+  <!-- Palet warna: pink terang, biru muda, ungu muda -->
+  <style>
+    :root {
+      --pink: #ff3e8a; /* pink terang */
+      --blue: #b2dfff; /* biru muda */
+      --purple: #dfc8ff; /* ungu muda */
+      --bg: #fff7fb;
+      --dark: #222;
+    }
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+    }
+    a { text-decoration: none; color: inherit; }
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 1rem;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--pink);
+    }
+    .logo span {
+      background: linear-gradient(135deg, var(--pink), #ff87bd);
+      color: #fff;
+      padding: .2rem .6rem;
+      border-radius: .6rem;
+      font-size: .8rem;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1rem;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 500;
+      font-size: .85rem;
+    }
+    nav a:hover {
+      color: var(--pink);
+    }
+    .btn-wa {
+      background: var(--pink);
+      color: #fff;
+      padding: .5rem 1rem;
+      border-radius: .7rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+    .menu-toggle { display: none; }
+
+    /* hero */
+    .hero {
+      margin-top: 68px;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(255,62,138,0.25), transparent),
+                  radial-gradient(circle at 150px 400px, rgba(178,223,255,0.25), transparent),
+                  #0e0e10;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem 4rem;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .hero-sub {
+      color: rgba(255,255,255,.8);
+      margin-bottom: 1.6rem;
+      max-width: 500px;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: .6rem 1.2rem;
+      border-radius: .7rem;
+      font-weight: 500;
+    }
+    .hero-img {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 41px 80px rgba(255,62,138,.25);
+    }
+    .hero-img img {
+      width: 100%; display: block;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #111;
+    }
+    .hero-img small {
+      display: block;
+      padding: .75rem 1rem;
+      background: rgba(6,6,6,.6);
+    }
+
+    section {
+      padding: 4rem 1rem 4.5rem;
+    }
+    .section-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .sec-title {
+      font-size: 1.8rem;
+      margin-bottom: .5rem;
+      color: #121212;
+    }
+    .sec-sub { margin-bottom: 2rem; color: #555; max-width: 650px; }
+
+    /* katalog cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.4rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,.04);
+      border: 1px solid rgba(255,62,138,.05);
+      display: flex;
+      flex-direction: column;
+      min-height: 270px;
+    }
+    .card img {
+      width: 100%; height: 150px; object-fit: cover;
+      background: var(--purple);
+    }
+    .card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: .35rem; }
+    .card-body h3 { font-size: 1.1rem; margin: 0 0 .1rem; }
+    .card-body h4 { font-size: 1rem; margin: 0 0 .1rem; }
+    .price { color: var(--pink); font-weight: 700; }
+    .card small { color: #666; font-size: 0.85rem; }
+    .card button {
+      margin-top: auto;
+      background: rgba(255,62,138,.12);
+      border: none;
+      padding: .45rem .8rem;
+      border-radius: .5rem;
+      font-size: .7rem;
+      color: var(--pink);
+      cursor: pointer;
+    }
+
+    /* order steps */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .step {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem 1.2rem 1.1rem;
+      border: 1px solid rgba(0,0,0,.03);
+    }
+    .badge {
+      width: 30px; height: 30px; border-radius: 50%; background: var(--pink); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: .6rem;
+    }
+
+    /* contact */
+    .contact-buttons {
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+    }
+    .contact-buttons a, .contact-buttons button {
+      background: #fff;
+      padding: .6rem .85rem;
+      border-radius: .9rem;
+      border: 1px solid rgba(0,0,0,.03);
+      display: flex;
+      gap: .4rem;
+      align-items: center;
+      font-weight: 500;
+      cursor: pointer;
+      color: #333;
+      transition: all 0.2s ease;
+    }
+    .contact-buttons a:hover, .contact-buttons button:hover {
+        background: #f4f4f4;
+        color: var(--pink);
+    }
+    .contact-buttons a svg, .contact-buttons button svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+    /* Hapus aturan .emoji lama */
+    /* .contact-buttons a span.emoji { font-size: 1.2rem; } */
+
+    /* footer */
+    footer {
+      background: #0f1015;
+      color: rgba(255,255,255,.7);
+      padding: 2.5rem 1rem 2.2rem;
+    }
+    .footer-content { 
+        max-width: 1100px; 
+        margin: auto; 
+        display: flex; 
+        gap: 2rem; 
+        flex-wrap: wrap;
+        justify-content: space-between; /* <-- Ditambahkan untuk merapikan */
+        align-items: flex-start; /* <-- Ditambahkan untuk merapikan */
+    }
+    .footer-brand { max-width: 330px; }
+    /* .footer-menu { display: flex; flex-direction: column; gap: .35rem; } */
+    /* .footer-menu a { color: rgba(255,255,255,.7); } */
+    
+    /* Style baru untuk ikon sosial di footer */
+    .footer-socials {
+        display: flex;
+        gap: 1.2rem;
+        align-items: center;
+    }
+    .footer-socials a {
+        color: rgba(255, 255, 255, 0.7);
+        transition: color 0.2s ease;
+    }
+    .footer-socials a:hover {
+        color: #fff;
+    }
+    .footer-socials svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+    }
+
+    .footer-bottom { 
+        max-width: 1100px; /* <-- Ditambahkan */
+        margin: 1.5rem auto 0; /* <-- Ditambahkan */
+        font-size: .75rem; 
+        display: flex; 
+        justify-content: space-between; 
+        gap: 1rem; 
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255,255,255,0.1); /* <-- Ditambahkan */
+        padding-top: 1.5rem; /* <-- Ditambahkan */
+    }
+
+    /* popup */
+    .popup-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1rem;
+    }
+    .popup {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.3rem 1.3rem .9rem;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 18px 35px rgba(255,62,138,.23);
+    }
+    .popup h3 { margin-top: 0; margin-bottom: .6rem; }
+    .popup small { display: block; margin-bottom: .75rem; color: #555; }
+    .popup-actions { display: flex; justify-content: flex-end; gap: .5rem; }
+    .btn-secondary { background: #efefef; border: none; padding: .45rem .85rem; border-radius: .4rem; cursor: pointer; }
+    .btn-primary { background: var(--pink); border: none; padding: .45rem .85rem; border-radius: .4rem; cursor: pointer; color: #fff; }
+
+    @media (max-width: 900px){
+      nav ul { position: absolute; top: 62px; right: 1rem; background: #fff; border-radius: 1rem; flex-direction: column; gap: .5rem; padding: 1rem 1.2rem; display: none; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
+      nav ul.show { display: flex; }
+      .menu-toggle { display: block; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER / NAVBAR -->
+  <header id="top">
+    <div class="nav-container">
+      <a href="#top" class="logo">
+        <span>LL</span> <!-- GANTI Nama Brand DI SINI -->LoopLine
+      </a>
+      <nav>
+        <ul id="navMenu">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#katalog">Katalog</a></li>
+          <li><a href="#costum">Costum</a></li>
+          <li><a href="#caraorder">Cara Order</a></li>
+          <li><a href="#feedback">Feedback</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+          <li><button class="btn-wa" data-confirm data-url="https://wa.me/6289525465737" data-message="Kamu akan diarahkan ke WhatsApp LoopLine. Lanjutkan?">Order via WhatsApp</button></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO / BANNER ATAS -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <div>
+        <p style="letter-spacing: .25rem; text-transform: uppercase; color: rgba(255,255,255,.6); font-size: .7rem;"> <!-- GANTI Sub Judul Kecil DI SINI -->Bag Charm • Handmade • Costum </p>
+        <h1 class="hero-title"> <!-- GANTI Headline DI SINI -->Make your Charm, Show your Vibe.</h1>
+        <p class="hero-sub"> <!-- GANTI Subheadline DI SINI -->Pesan sekarang, bikin bagcharm lucu sesuai style kamu. Aksen charm premium, warna pastel, dan desain yang bisa kamu mixing sendiri.</p>
+        <div class="hero-buttons">
+          <a href="#katalog" class="btn-wa" style="background: var(--blue); color: #1a1a1a; font-weight: 600;">Lihat Variant</a>
+          <button class="btn-outline" data-confirm data-url="https://wa.me/6289525465737" data-message="Kamu akan diarahkan ke WhatsApp untuk pemesanan. Apakah kamu yakin?">Pesan Sekarang (WA)</button>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="???-hero.jpg" alt="Bagcharm LoopLine" />
+        <small><!-- GANTI Caption Gambar Hero DI SINI -->Gambar pajangan 1 layar, ganti dengan foto display booth LoopLine kamu.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / SLIDE 2 (DIUBAH) -->
+  <section id="about">
+    <!-- Bagian wrapper dibuat rata tengah -->
+    <div class="section-wrapper" style="text-align: center;">
+      <h2 class="sec-title"><!-- GANTI Judul About DI SINI -->Tentang LoopLine</h2>
+      <!-- Garis aksen pink ditambahkan -->
+      <div style="width: 80px; height: 3px; background: var(--pink); margin: 0 auto 1.5rem;"></div>
+      <!-- Paragraf subjudul dibuat rata tengah dengan margin auto -->
+      <p class="sec-sub" style="margin-left: auto; margin-right: auto;"><!-- GANTI Isi About DI SINI -->LoopLine adalah brand aksesoris yang fokus pada bagcharm estetik, cute, dan bisa dikustom sesuai karakter pemiliknya. Semua dibuat manual dengan bahan pilihan (tali makrame, resin charm, beads) dan dikemas rapi untuk hadiah ataupun koleksi.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: KATALOG -->
+  <section id="katalog" style="background: linear-gradient(180deg, rgba(255,62,138,.08), rgba(178,223,255,.12));">
+    <div class="section-wrapper">
+      <h2 class="sec-title"><!-- GANTI Judul Katalog DI SINI -->Katalog BagCharm</h2>
+      <p class="sec-sub"><!-- GANTI Subjudul Katalog DI SINI -->Pilih varian instan siap pakai. Tinggal klik dan pesan via WA.</p>
+      <div class="card-grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <img src="???-katalog1.jpg" alt="Bagcharm 1" />
+          <div class="card-body">
+            <h3><!-- GANTI Nama Produk DI SINI -->Pastel Daisy</h3>
+            <small><!-- GANTI Deskripsi Produk DI SINI -->Charm bunga pastel dengan aksen ungu muda.</small>
+            <p class="price"><!-- GANTI Harga DI SINI -->Rp15.000</p>
+            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20Pastel%20Daisy" data-message="Akan diarahkan ke WA dengan format otomatis. Lanjut?">Pesan via WA</button>
+          </div>
+        </article>
+        <!-- Card 2 -->
+        <article class="card">
+          <img src="???-katalog2.jpg" alt="Bagcharm 2" />
+          <div class="card-body">
+            <h3><!-- GANTI Nama Produk DI SINI -->Bubble Charm</h3>
+            <small><!-- GANTI Deskripsi Produk DI SINI -->Perpaduan biru muda & pink terang, cocok buat tas putih.</small>
+            <p class="price">Rp15.000</p>
+            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20Bubble%20Charm" data-message="Akan diarahkan ke WA. Yakin?">Pesan via WA</button>
+          </div>
+        </article>
+        <!-- Card 3 -->
+        <article class="card">
+          <img src="???-katalog3.jpg" alt="Bagcharm 3" />
+          <div class="card-body">
+            <h3><!-- GANTI Nama Produk DI SINI -->Nature Vibes</h3>
+            <small><!-- GANTI Deskripsi Produk DI SINI -->Tali hijau dan Charm Hijau.</small>
+            <p class="price">Rp15.000</p>
+            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20PNJ%20Series" data-message="Akan keluar dari website. Lanjutkan?">Pesan via WA</button>
+          </div>
+        </article>
+        <!-- Card 4 -->
+        <article class="card">
+          <img src="???-katalog4.jpg" alt="Bagcharm 4" />
+          <div class="card-body">
+            <h3><!-- GANTI Nama Produk DI SINI -->Varian Sunny Initialsl</h3>
+            <small><!-- GANTI Deskripsi Produk DI SINI -->Tali Kuning dan Manik Nama.</small>
+            <p class="price">Rp15.000</p>
+            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20Korean%20Pastel" data-message="Kamu akan di arahkan ke WhatsApp. Yakin?">Pesan via WA</button>
+          </div>
+        </article>
+
+        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah produk baru -->
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: COSTUM BAGCHARM -->
+  <section id="costum">
+    <div class="section-wrapper">
+      <h2 class="sec-title"><!-- GANTI Judul Costum DI SINI -->Costum Bagcharm</h2>
+      <p class="sec-sub"><!-- GANTI Subjudul Costum DI SINI -->Pilih warna tali, bentuk charm, dan gantungan nama kamu.</p>
+
+      <h3 style="margin-bottom:1rem;">Pilihan Warna Tali Makrame</h3>
+      <div class="card-grid" style="margin-bottom:1.5rem;">
+        <article class="card">
+          <img src="???-tali-pink.jpg" alt="Tali Pink" />
+          <div class="card-body">
+            <h4><!-- GANTI Nama Warna DI SINI -->Pink LoopLine</h4>
+            <small>Warna wajib brand.</small>
+          </div>
+        </article>
+        <article class="card">
+          <img src="???-tali-blue.jpg" alt="Tali Biru" />
+          <div class="card-body">
+            <h4>Sky Blue</h4>
+            <small>Lembut, cocok untuk hadiah.</small>
+          </div>
+        </article>
+        <article class="card">
+          <img src="???-tali-purple.jpg" alt="Tali Ungu" />
+          <div class="card-body">
+            <h4>Lavender</h4>
+            <small>Estetik & girly.</small>
+          </div>
+        </article>
+        
+        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah warna tali baru -->
+        
+      </div>
+
+      <h3 style="margin-bottom:1rem;">Pilihan Bentuk BagCharm</h3>
+      <div class="card-grid" style="margin-bottom:1.5rem;">
+        <article class="card">
+          <img src="???-bentuk-rantai.jpg" alt="Bentuk Rantai" />
+          <div class="card-body">
+            <h4>Rantai Pastel</h4>
+            <small>Campur 3 warna langsung.</small>
+          </div>
+        </article>
+        <article class="card">
+          <img src="???-bentuk-manik.jpg" alt="Bentuk Manik" />
+          <div class="card-body">
+            <h4>Beads Full</h4>
+            <small>Fokus ke manik estetik.</small>
+          </div>
+        </article>
+        <article class="card">
+          <img src="???-bentuk-mix.jpg" alt="Bentuk Mix" />
+          <div class="card-body">
+            <h4>Mix Charm</h4>
+            <small>Campur huruf nama + icon.</small>
+          </div>
+        </article>
+        
+        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah bentuk baru -->
+        
+      </div>
+
+      <!-- BAGIAN BARU: PILIHAN CHARM (DITAMBAHKAN) -->
+      <h3 style="margin-bottom:1rem;">Pilihan Charm (Manik/Gantungan)</h3>
+      <div class="card-grid" style="margin-bottom:1.5rem;">
+        <article class="card">
+          <img src="???-charm-huruf.jpg" alt="Charm Huruf" />
+          <div class="card-body">
+            <h4><!-- GANTI Nama Charm DI SINI -->Charm Huruf</h4>
+            <small><!-- GANTI Deskripsi Charm DI SINI -->Bisa request inisial atau nama.</small>
+          </div>
+        </article>
+        <article class="card">
+          <img src="???-charm-bunga.jpg" alt="Charm Bunga" />
+          <div class="card-body">
+            <h4><!-- GANTI Nama Charm DI SINI -->Charm Bunga</h4>
+            <small><!-- GANTI Deskripsi Charm DI SINI -->Berbagai model bunga resin & manik.</small>
+          </div>
+        </article>
+        <article class="card">
+          <img src="???-charm-lucu.jpg" alt="Charm Lucu" />
+          <div class="card-body">
+            <h4><!-- GANTI Nama Charm DI SINI -->Charm Karakter</h4>
+            <small><!-- GANTI Deskripsi Charm DI SINI -->Bentuk lucu: beruang, pita, bintang.</small>
+          </div>
+        </article>
+        
+        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah pilihan charm baru -->
+        
+      </div>
+
+      <button class="btn-wa" data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20custom%20bagcharm%20dengan%20contoh%20foto" data-message="Kamu akan kirim custom ke WA. Lanjut?">Kirim Brief Custom via WA</button>
+    </div>
+  </section>
+
+  <!-- SECTION: CARA ORDER -->
+  <section id="caraorder" style="background: rgba(223,200,255,.12);">
+    <div class="section-wrapper">
+      <h2 class="sec-title"><!-- GANTI Judul Cara Order DI SINI -->Cara Order</h2>
+      <p class="sec-sub"><!-- GANTI Subjudul Cara Order DI SINI -->Ikuti 3 langkah gampang ini. (Isi teks ini sesuai format kamu nanti)</p>
+      <div class="steps">
+        <div class="step">
+          <div class="badge">1</div>
+          <h4>Pilih katalog di website</h4>
+          <p><!-- GANTI Isi Step 1 DI SINI -->Scroll ke bagian katalog atau custom lalu pilih model yang kamu mau.</p>
+        </div>
+        <div class="step">
+          <div class="badge">2</div>
+          <h4>Klik "Pesan via WhatsApp"</h4>
+          <p><!-- GANTI Isi Step 2 DI SINI -->Tombol bisa di semua kartu produk atau tombol order di atas.</p>
+        </div>
+        <div class="step">
+          <div class="badge">3</div>
+          <h4>Isi format otomatis</h4>
+          <p><!-- GANTI Isi Step 3 DI SINI -->Sebutkan nama, varian, warna, serta kirim foto referensi kalau custom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: FEEDBACK / SURVEY -->
+  <section id="feedback">
+    <div class="section-wrapper">
+      <h2 class="sec-title"><!-- GANTI Judul Feedback DI SINI -->Feedback / Survey</h2>
+      <p class="sec-sub"><!-- GANTI Isi Feedback DI SINI -->Halo LoopLiners, sudah pernah order? Tolong beri masukannya yaa supaya LoopLine makin rapi dan cepat responnya.</p>
+      <button class="btn-wa" data-confirm data-url="https://docs.google.com/forms" data-message="Kamu akan diarahkan ke Google Forms feedback. Apakah kamu yakin?">Isi Feedback Sekarang</button>
+      <p style="margin-top: .6rem; font-size: .8rem; color: #777;"> <!-- GANTI Info QR DI SINI -->Nanti di bagian ini kamu bisa taruh <strong>kode QR</strong> survei.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: KONTAK & LOKASI (DIUBAH DENGAN IKON SVG) -->
+  <section id="kontak" style="background: rgba(178,223,255,.25);">
+    <div class="section-wrapper">
+      <h2 class="sec-title"><!-- GANTI Judul Kontak DI SINI -->Kontak & Lokasi</h2>
+      <p class="sec-sub"><!-- GANTI Isi Kontak DI SINI -->Lokasi utama di PNJ, Business Center. Klik tombol di bawah untuk info lengkap.</p>
+      <div class="contact-buttons">
+        <!-- Emoji diganti SVG Ikon -->
+        <button data-confirm data-url="https://www.google.com/maps" data-message="Kamu akan diarahkan ke Google Maps lokasi LoopLine (PNJ, Business Center). Lanjut?">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Lokasi PNJ
+        </button>
+        <!-- Emoji diganti SVG Ikon -->
+        <button data-confirm data-url="https://wa.me/6289525465737" data-message="Kamu akan diarahkan ke WhatsApp admin LoopLine. Yakin?">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.2 2.2z"/></svg>
+          WA Pemesanan
+        </button>
+        <!-- Emoji diganti SVG Ikon -->
+        <button data-confirm data-url="https://www.instagram.com/loopline.charm" data-message="Akan dibuka Instagram @Loopline.charm. Lanjut?">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.602c-3.26 0-3.66.014-4.944.072C2.694.723.378 3.04.232 7.056.174 8.34.16 8.74.16 12s.014 3.66.072 4.944c.147 4.016 2.46 6.332 6.474 6.474 1.287.058 1.687.072 4.946.072s3.66-.014 4.944-.072c4.016-.147 6.332-2.46 6.474-6.474.058-1.287.072-1.687.072-4.946s-.014-3.66-.072-4.944C23.277 3.04 20.96 2.46 16.946.232C15.66.174 15.26.16 12 .16zm0 5.838a4.602 4.602 0 100 9.204 4.602 4.602 0 000-9.204zm0 7.503a2.902 2.902 0 110-5.804 2.902 2.902 0 010 5.804zM20.5 3.102a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z"/></svg>
+          Instagram
+        </button>
+        <!-- Emoji diganti SVG Ikon -->
+        <!-- Emoji diganti SVG Ikon -->
+        <button data-confirm data-url="#" data-message="Facebook LoopLine masih disiapkan. Terima kasih sudah cek.">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.69v-3.62h3.13V8.41c0-3.1 1.89-4.79 4.66-4.79 1.33 0 2.47.1 2.8.15v3.24h-1.9c-1.5 0-1.8.72-1.8 1.77v2.3h3.59l-.47 3.62h-3.12V24h5.78c.74 0 1.33-.59 1.33-1.32V1.32C24 .59 23.41 0 22.675 0z"/></svg>
+          Facebook
+        </button>
+      </div>
+      <p style="margin-top: 1.2rem; font-size: .85rem;">WA / Admin: <!-- GANTI Nomor WA DI SINI -->0895-2546-5737</p>
+    </div>
+  </section>
+
+  <!-- FOOTER (DIUBAH) -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3 style="color:#fff; margin-bottom:.4rem;">LoopLine</h3>
+        <p style="margin:0;"> <!-- GANTI Deskripsi Pendek Footer DI SINI -->Brand aksesoris mahasiswa PNJ yang fokus pada bagcharm custom, cute, dan pastinya ramah kantong.</p>
+      </div>
+      
+      <!-- Menu Cepat (DIHAPUS) -->
+
+      <!-- Menu Sosial diubah jadi Ikon -->
+      <div class="footer-socials">
+        <a data-confirm data-url="https://www.instagram.com/loopline.charm" data-message="Akan dibuka Instagram. Lanjut?" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.602c-3.26 0-3.66.014-4.944.072C2.694.723.378 3.04.232 7.056.174 8.34.16 8.74.16 12s.014 3.66.072 4.944c.147 4.016 2.46 6.332 6.474 6.474 1.287.058 1.687.072 4.946.072s3.66-.014 4.944-.072c4.016-.147 6.332-2.46 6.474-6.474.058-1.287.072-1.687.072-4.946s-.014-3.66-.072-4.944C23.277 3.04 20.96 2.46 16.946.232C15.66.174 15.26.16 12 .16zm0 5.838a4.602 4.602 0 100 9.204 4.602 4.602 0 000-9.204zm0 7.503a2.902 2.902 0 110-5.804 2.902 2.902 0 010 5.804zM20.5 3.102a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z"/></svg>
+        </a>
+        <a data-confirm data-url="#" data-message="Facebook masih Coming Soon." aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.69v-3.62h3.13V8.41c0-3.1 1.89-4.79 4.66-4.79 1.33 0 2.47.1 2.8.15v3.24h-1.9c-1.5 0-1.8.72-1.8 1.77v2.3h3.59l-.47 3.62h-3.12V24h5.78c.74 0 1.33-.59 1.33-1.32V1.32C24 .59 23.41 0 22.675 0z"/></svg>
+        </a>
+      </div>
+    </div>
+    <!-- Footer Bottom dibuat full-width di dalam footer -->
+    <div class="footer-bottom">
+      <p>© 2025 LoopLine | Made with Love 💗</p>
+      <p>Design base by LoopLine</p>
+    </div>
+  </footer>
+
+  <!-- POPUP GLOBAL -->
+  <div class="popup-backdrop" id="confirmModal">
+    <div class="popup">
+      <h3 id="popupTitle">Konfirmasi</h3>
+      <small id="popupMessage">Kamu akan diarahkan keluar dari website. Apakah kamu yakin?</small>
+      <div class="popup-actions">
+        <button class="btn-secondary" id="popupCancel">Batal</button>
+        <button class="btn-primary" id="popupOk">Lanjut</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // toggle mobile nav
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    // global popup handler
+    const modal = document.getElementById('confirmModal');
+    const msg = document.getElementById('popupMessage');
+    const btnCancel = document.getElementById('popupCancel');
+    const btnOk = document.getElementById('popupOk');
+    let targetUrl = '#';
+
+    document.addEventListener('click', function(e) {
+      const el = e.target.closest('[data-confirm]');
+      if (!el) return;
+      e.preventDefault();
+      const text = el.getAttribute('data-message') || 'Kamu akan diarahkan keluar dari website LoopLine. Lanjut?';
+      const url = el.getAttribute('data-url') || '#';
+      msg.textContent = text;
+      targetUrl = url;
+      modal.style.display = 'flex';
+    });
+
+    btnCancel.addEventListener('click', () => {
+      modal.style.display = 'none';
+      targetUrl = '#';
+    });
+    btnOk.addEventListener('click', () => {
+      modal.style.display = 'none';
+      if (targetUrl && targetUrl !== '#') {
+        window.open(targetUrl, '_blank');
+      }
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
