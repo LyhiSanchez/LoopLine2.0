@@ -1,763 +1,762 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" style="color-scheme: light;">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LoopLine - Make Your Charm</title>
-  <!-- Palet warna: pink terang, biru muda, ungu muda -->
-  <style>
-    :root {
-      --pink: #ff3e8a; /* pink terang */
-      --blue: #b2dfff; /* biru muda */
-      --purple: #dfc8ff; /* ungu muda */
-      --bg: #fff7fb;
-      --dark: #222;
-    }
-    * { box-sizing: border-box; scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
-      color: var(--dark);
-    }
-    a { text-decoration: none; color: inherit; }
-    header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    .nav-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.7rem 1rem;
-      gap: 1rem;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--pink);
-    }
-    .logo span {
-      background: linear-gradient(135deg, var(--pink), #ff87bd);
-      color: #fff;
-      padding: .2rem .6rem;
-      border-radius: .6rem;
-      font-size: .8rem;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1rem;
-      align-items: center;
-    }
-    nav a {
-      font-weight: 500;
-      font-size: .85rem;
-    }
-    nav a:hover {
-      color: var(--pink);
-    }
-    .btn-wa {
-      background: var(--pink);
-      color: #fff;
-      padding: .5rem 1rem;
-      border-radius: .7rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-    }
-    .menu-toggle { display: none; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    /* hero */
-    .hero {
-      margin-top: 68px;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, rgba(255,62,138,0.25), transparent),
-                  radial-gradient(circle at 150px 400px, rgba(178,223,255,0.25), transparent),
-                  #0e0e10;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem 4rem;
-    }
-    .hero-inner {
-      max-width: 1100px;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-    .hero-title {
-      font-size: clamp(2.4rem, 4vw, 3.2rem);
-      line-height: 1.05;
-      margin-bottom: 1rem;
-    }
-    .hero-sub {
-      color: rgba(255,255,255,.8);
-      margin-bottom: 1.6rem;
-      max-width: 500px;
-    }
-    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255,255,255,0.4);
-      color: #fff;
-      padding: .6rem 1.2rem;
-      border-radius: .7rem;
-      font-weight: 500;
-    }
-    .hero-img {
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 1.5rem;
-      overflow: hidden;
-      box-shadow: 0 41px 80px rgba(255,62,138,.25);
-    }
-    .hero-img img {
-      width: 100%; display: block;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      background: #111;
-    }
-    .hero-img small {
-      display: block;
-      padding: .75rem 1rem;
-      background: rgba(6,6,6,.6);
-    }
+    <!-- Anti Force Dark Mode Meta Tags -->
+    <meta name="color-scheme" content="light only">
+    <meta name="theme-color" content="#ffffff">
 
-    section {
-      padding: 4rem 1rem 4.5rem;
-    }
-    .section-wrapper {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .sec-title {
-      font-size: 1.8rem;
-      margin-bottom: .5rem;
-      color: #121212;
-    }
-    .sec-sub { margin-bottom: 2rem; color: #555; max-width: 650px; }
+    <title>LoopLine - Make Your Charm</title>
 
-    /* katalog cards */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.4rem;
-    }
-    .card {
-      background: #fff;
-      border-radius: 1.2rem;
-      overflow: hidden;
-      box-shadow: 0 12px 30px rgba(0,0,0,.04);
-      border: 1px solid rgba(255,62,138,.05);
-      display: flex;
-      flex-direction: column;
-      min-height: 270px;
-    }
-    .card img {
-      width: 100%; height: 150px; object-fit: cover;
-      background: var(--purple);
-    }
-    .card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: .35rem; }
-    .card-body h3 { font-size: 1.1rem; margin: 0 0 .1rem; }
-    .card-body h4 { font-size: 1rem; margin: 0 0 .1rem; }
-    .price { color: var(--pink); font-weight: 700; }
-    .card small { color: #666; font-size: 0.85rem; }
-    .card button {
-      margin-top: auto;
-      background: rgba(255,62,138,.12);
-      border: none;
-      padding: .45rem .8rem;
-      border-radius: .5rem;
-      font-size: .7rem;
-      color: var(--pink);
-      cursor: pointer;
-    }
+    <!-- Neo Brutalism Fonts (Added Space Mono for more raw/technical feel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700;900&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
 
-    /* order steps */
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .step {
-      background: #fff;
-      border-radius: 1rem;
-      padding: 1rem 1.2rem 1.1rem;
-      border: 1px solid rgba(0,0,0,.03);
-    }
-    .badge {
-      width: 30px; height: 30px; border-radius: 50%; background: var(--pink); color: #fff;
-      display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: .6rem;
-    }
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neo-pink': '#FF2A7A', // Lebih elektrik
+                        'neo-blue': '#4DF0FF', // Lebih cyan/neon
+                        'neo-purple': '#C994FF',
+                        'neo-yellow': '#FFEB00', // Kuning stabilo
+                        'neo-green': '#00E573', // Tambahan warna hijau brutal
+                        'neo-bg': '#ffffff', // Background putih bersih untuk kontras tinggi
+                        'neo-black': '#000000', // Hitam pekat
+                    },
+                    fontFamily: {
+                        'sans': ['Public Sans', 'sans-serif'],
+                        'heading': ['Space Grotesk', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'brutal': '6px 6px 0px 0px #000000',
+                        'brutal-lg': '12px 12px 0px 0px #000000',
+                        'brutal-sm': '4px 4px 0px 0px #000000',
+                        'brutal-active': '0px 0px 0px 0px #000000',
+                    },
+                    borderWidth: {
+                        '3': '3px',
+                        '4': '4px',
+                        '5': '5px',
+                    }
+                }
+            }
+        }
+    </script>
 
-    /* contact */
-    .contact-buttons {
-      display: flex;
-      gap: .7rem;
-      flex-wrap: wrap;
-    }
-    .contact-buttons a, .contact-buttons button {
-      background: #fff;
-      padding: .6rem .85rem;
-      border-radius: .9rem;
-      border: 1px solid rgba(0,0,0,.03);
-      display: flex;
-      gap: .4rem;
-      align-items: center;
-      font-weight: 500;
-      cursor: pointer;
-      color: #333;
-      transition: all 0.2s ease;
-    }
-    .contact-buttons a:hover, .contact-buttons button:hover {
-        background: #f4f4f4;
-        color: var(--pink);
-    }
-    .contact-buttons a svg, .contact-buttons button svg {
-        width: 20px;
-        height: 20px;
-        fill: currentColor;
-    }
-    /* Hapus aturan .emoji lama */
-    /* .contact-buttons a span.emoji { font-size: 1.2rem; } */
-
-    /* footer */
-    footer {
-      background: #0f1015;
-      color: rgba(255,255,255,.7);
-      padding: 2.5rem 1rem 2.2rem;
-    }
-    .footer-content { 
-        max-width: 1100px; 
-        margin: auto; 
-        display: flex; 
-        gap: 2rem; 
-        flex-wrap: wrap;
-        justify-content: space-between; /* <-- Ditambahkan untuk merapikan */
-        align-items: flex-start; /* <-- Ditambahkan untuk merapikan */
-    }
-    .footer-brand { max-width: 330px; }
-    /* .footer-menu { display: flex; flex-direction: column; gap: .35rem; } */
-    /* .footer-menu a { color: rgba(255,255,255,.7); } */
-    
-    /* Style baru untuk ikon sosial di footer */
-    .footer-socials {
-        display: flex;
-        gap: 1.2rem;
-        align-items: center;
-    }
-    .footer-socials a {
-        color: rgba(255, 255, 255, 0.7);
-        transition: color 0.2s ease;
-    }
-    .footer-socials a:hover {
-        color: #fff;
-    }
-    .footer-socials svg {
-        width: 24px;
-        height: 24px;
-        fill: currentColor;
-    }
-
-    .footer-bottom { 
-        max-width: 1100px; /* <-- Ditambahkan */
-        margin: 1.5rem auto 0; /* <-- Ditambahkan */
-        font-size: .75rem; 
-        display: flex; 
-        justify-content: space-between; 
-        gap: 1rem; 
-        flex-wrap: wrap;
-        border-top: 1px solid rgba(255,255,255,0.1); /* <-- Ditambahkan */
-        padding-top: 1.5rem; /* <-- Ditambahkan */
-    }
-
-    /* popup */
-    .popup-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 1rem;
-    }
-    .popup {
-      background: #fff;
-      border-radius: 1rem;
-      padding: 1.3rem 1.3rem .9rem;
-      max-width: 360px;
-      width: 100%;
-      box-shadow: 0 18px 35px rgba(255,62,138,.23);
-    }
-    .popup h3 { margin-top: 0; margin-bottom: .6rem; }
-    .popup small { display: block; margin-bottom: .75rem; color: #555; }
-    .popup-actions { display: flex; justify-content: flex-end; gap: .5rem; }
-    .btn-secondary { background: #efefef; border: none; padding: .45rem .85rem; border-radius: .4rem; cursor: pointer; }
-    .btn-primary { background: var(--pink); border: none; padding: .45rem .85rem; border-radius: .4rem; cursor: pointer; color: #fff; }
-
-    @media (max-width: 900px){
-      nav ul { position: absolute; top: 62px; right: 1rem; background: #fff; border-radius: 1rem; flex-direction: column; gap: .5rem; padding: 1rem 1.2rem; display: none; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
-      nav ul.show { display: flex; }
-      .menu-toggle { display: block; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero { text-align: left; }
-    }
-  </style>
+    <style>
+         :root {
+            color-scheme: light only;
+        }
+        
+        body {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            scroll-behavior: smooth;
+        }
+        /* Memaksa elemen terang */
+        
+        img,
+        picture,
+        video,
+        canvas,
+        svg {
+            color-scheme: light only;
+        }
+        /* Dot Grid Background untuk estetika raw/cetak */
+        
+        .bg-grid-pattern {
+            background-image: radial-gradient(#000 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        /* Custom Neo Brutalism Utilities */
+        
+        .brutal-border {
+            border: 4px solid #000000;
+        }
+        
+        .brutal-border-b {
+            border-bottom: 4px solid #000000;
+        }
+        
+        .brutal-btn {
+            border: 4px solid #000000;
+            box-shadow: 6px 6px 0px 0px #000000;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+        
+        .brutal-btn:active,
+        .brutal-btn:active {
+            transform: translate(6px, 6px);
+            box-shadow: 0px 0px 0px 0px #000000;
+        }
+        /* Hover efek kaku tanpa transisi halus untuk nuansa brutal */
+        
+        .brutal-card {
+            border: 4px solid #000000;
+            box-shadow: 8px 8px 0px 0px #000000;
+            background-color: #ffffff;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        
+        .brutal-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px 0px #000000;
+        }
+        /* Marquee Animation */
+        
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            border-top: 4px solid #000;
+            border-bottom: 4px solid #000;
+            background: #FFEB00;
+            padding: 10px 0;
+            display: flex;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+        
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        /* Image fallbacks - if image fails to load it still looks brutal */
+        
+        img {
+            background-color: #e5e5e5;
+            position: relative;
+        }
+        
+        img::after {
+            content: "IMG MISSING";
+            font-family: 'Space Mono', monospace;
+            display: flex;
+            align-items: center;
+            justify-center: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #FF2A7A;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body>
-  <!-- HEADER / NAVBAR -->
-  <header id="top">
-    <div class="nav-container">
-      <a href="#top" class="logo">
-        <span>LL</span> <!-- GANTI Nama Brand DI SINI -->LoopLine
-      </a>
-      <nav>
-        <ul id="navMenu">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#katalog">Katalog</a></li>
-          <li><a href="#costum">Costum</a></li>
-          <li><a href="#caraorder">Cara Order</a></li>
-          <li><a href="#feedback">Feedback</a></li>
-          <li><a href="#kontak">Kontak</a></li>
-          <li><button class="btn-wa" data-confirm data-url="https://wa.me/6289525465737" data-message="Kamu akan diarahkan ke WhatsApp LoopLine. Lanjutkan?">Order via WhatsApp</button></li>
-        </ul>
-      </nav>
-      <button class="menu-toggle" id="menuToggle">☰</button>
-    </div>
-  </header>
 
-  <!-- HERO / BANNER ATAS -->
-  <section id="home" class="hero">
-    <div class="hero-inner">
-      <div>
-        <p style="letter-spacing: .25rem; text-transform: uppercase; color: rgba(255,255,255,.6); font-size: .7rem;"> <!-- GANTI Sub Judul Kecil DI SINI -->Bag Charm • Handmade • Costum </p>
-        <h1 class="hero-title"> <!-- GANTI Headline DI SINI -->Make your Charm, Show your Vibe.</h1>
-        <p class="hero-sub"> <!-- GANTI Subheadline DI SINI -->Pesan sekarang, bikin bagcharm lucu sesuai style kamu. Aksen charm premium, warna pastel, dan desain yang bisa kamu mixing sendiri.</p>
-        <div class="hero-buttons">
-          <a href="#katalog" class="btn-wa" style="background: var(--blue); color: #1a1a1a; font-weight: 600;">Lihat Variant</a>
-          <button class="btn-outline" data-confirm data-url="https://wa.me/6289525465737" data-message="Kamu akan diarahkan ke WhatsApp untuk pemesanan. Apakah kamu yakin?">Pesan Sekarang (WA)</button>
+<body class="font-sans antialiased selection:bg-neo-black selection:text-neo-yellow">
+
+    <!-- HEADER / NAVBAR -->
+    <header id="top" class="fixed top-0 left-0 w-full bg-white border-b-5 border-black z-50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
+
+            <!-- Logo -->
+            <a href="#top" class="flex items-center gap-2 font-heading font-black text-2xl md:text-3xl text-black uppercase tracking-tighter">
+                <span class="bg-neo-pink text-white px-3 py-1 border-4 border-black shadow-brutal-sm -rotate-3 hover:rotate-0 transition-transform">LL</span>
+                <span class="mt-1">LOOPLINE</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:block">
+                <ul class="flex items-center gap-6 font-mono font-bold text-sm uppercase tracking-widest">
+                    <li><a href="#katalog" class="hover:bg-neo-yellow hover:px-2 transition-all">Katalog</a></li>
+                    <li><a href="#custom" class="hover:bg-neo-blue hover:px-2 transition-all">Custom</a></li>
+                    <li><a href="#caraorder" class="hover:bg-neo-green hover:px-2 transition-all">Cara Order</a></li>
+                    <li><a href="#feedback" class="hover:bg-neo-purple hover:px-2 transition-all">Feedback</a></li>
+                    <li><a href="#kontak" class="hover:bg-neo-pink hover:text-white hover:px-2 transition-all">Kontak</a></li>
+                    <li>
+                        <button class="brutal-btn bg-black text-white px-6 py-2 ml-4 hover:bg-neo-pink hover:text-white" data-confirm data-url="https://wa.me/6289525465737" data-message="Pesan sekarang via WhatsApp?">
+                            ORDER [WA]
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menuToggle" class="lg:hidden brutal-btn bg-neo-yellow px-4 py-2 text-xl font-black">
+                MENU
+            </button>
         </div>
-      </div>
-      <div class="hero-img">
-        <img src="canva pink.png" alt="Bagcharm LoopLine" />
-      </div>
-    </div>
-  </section>
 
-  <!-- ABOUT / SLIDE 2 (DIUBAH) -->
-  <section id="about">
-    <!-- Bagian wrapper dibuat rata tengah -->
-    <div class="section-wrapper" style="text-align: center;">
-      <h2 class="sec-title"><!-- GANTI Judul About DI SINI -->Tentang LoopLine</h2>
-      <!-- Garis aksen pink ditambahkan -->
-      <div style="width: 80px; height: 3px; background: var(--pink); margin: 0 auto 1.5rem;"></div>
-      <!-- Paragraf subjudul dibuat rata tengah dengan margin auto -->
-      <p class="sec-sub" style="margin-left: auto; margin-right: auto;"><!-- GANTI Isi About DI SINI -->LoopLine adalah brand aksesoris yang fokus pada bagcharm estetik, cute, dan bisa dikustom sesuai karakter pemiliknya. Semua dibuat manual dengan bahan pilihan (tali makrame, resin charm, beads) dan dikemas rapi untuk hadiah ataupun koleksi.</p>
-    </div>
-  </section>
+        <!-- Mobile Nav -->
+        <nav id="navMenu" class="hidden absolute top-full left-0 w-full bg-white border-b-5 border-black shadow-brutal-lg flex-col items-center py-8 gap-6 font-heading font-black text-2xl uppercase lg:hidden z-40">
+            <a href="#katalog" class="mobile-link hover:text-neo-pink bg-neo-yellow px-6 py-2 border-4 border-black -rotate-1">Katalog</a>
+            <a href="#custom" class="mobile-link hover:text-neo-blue bg-neo-pink text-white px-6 py-2 border-4 border-black rotate-2">Custom</a>
+            <a href="#caraorder" class="mobile-link hover:text-neo-green bg-neo-blue px-6 py-2 border-4 border-black -rotate-2">Cara Order</a>
+            <a href="#feedback" class="mobile-link hover:text-neo-purple bg-neo-green px-6 py-2 border-4 border-black rotate-1">Feedback</a>
+            <a href="#kontak" class="mobile-link hover:text-neo-yellow bg-black text-white px-6 py-2 border-4 border-black -rotate-1">Kontak</a>
+            <button class="mobile-link brutal-btn bg-black text-white px-10 py-4 mt-4 text-xl" data-confirm data-url="https://wa.me/6289525465737" data-message="Buka WhatsApp LoopLine?">
+                ORDER [WA]
+            </button>
+        </nav>
+    </header>
 
-  <!-- SECTION: KATALOG -->
-  <section id="katalog" style="background: linear-gradient(180deg, rgba(255,62,138,.08), rgba(178,223,255,.12));">
-    <div class="section-wrapper">
-      <h2 class="sec-title"><!-- GANTI Judul Katalog DI SINI -->Katalog BagCharm</h2>
-      <p class="sec-sub"><!-- GANTI Subjudul Katalog DI SINI -->Pilih varian instan siap pakai. Tinggal klik dan pesan via WA.</p>
-      <div class="card-grid">
-        <!-- Card 1 -->
-        <article class="card">
-          <img src="yellow.jpg" alt="Bagcharm 1" />
-          <div class="card-body">
-            <h3><!-- GANTI Nama Produk DI SINI -->Flutter Shy</h3>
-            <small><!-- GANTI Deskripsi Produk DI SINI -->Perpaduan warna kuning lembut dan pink pastel yang memberi kesan standout</small>
-            <p class="price"><!-- GANTI Harga DI SINI -->Rp15.000</p>
-            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20BagCharm%20Flutter%20Shy%20(Kuning%20%26%20Pink%20Pastel)" data-message="Akan diarahkan ke WA dengan format otomatis. Lanjut?">Pesan via WA</button>
-          </div>
-        </article>
-        <!-- Card 2 -->
-        <article class="card">
-          <img src="biru.jpg" alt="Bagcharm 2" />
-          <div class="card-body">
-            <h3><!-- GANTI Nama Produk DI SINI -->Bubble Gum</h3>
-            <small><!-- GANTI Deskripsi Produk DI SINI -->Kombinasi biru langit dan putih bersih yang menghadirkan kesan lembut dan kalem.</small>
-            <p class="price">Rp15.000</p>
-            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20BagCharm%20Bubble%20Gum%20(Biru%20Langit%20%26%20Putih)" data-message="Akan diarahkan ke WA. Yakin?">Pesan via WA</button>
-          </div>
-        </article>
-        <!-- Card 3 -->
-        <article class="card">
-          <img src="pink.jpg" alt="Bagcharm 3" />
-          <div class="card-body">
-            <h3><!-- GANTI Nama Produk DI SINI -->Pinky Bliss</h3>
-            <small><!-- GANTI Deskripsi Produk DI SINI -->Kombinasi magenta dan pink muda yang menambah kesan girly dan cute tapi tetap berani</small>
-            <p class="price">Rp15.000</p>
-            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20BagCharm%20Pinky%20Bliss%20(Magenta%20%26%20Pink)" data-message="Akan keluar dari website. Lanjutkan?">Pesan via WA</button>
-          </div>
-        </article>
-        <!-- Card 4 -->
-        <article class="card">
-          <img src="coklat.jpg" alt="Bagcharm 4" />
-          <div class="card-body">
-            <h3><!-- GANTI Nama Produk DI SINI -->Cleveland</h3>
-            <small><!-- GANTI Deskripsi Produk DI SINI -->Perpaduan warna coklat kopi dan broken white yang memberi kesan hangat dan klasik</small>
-            <p class="price">Rp15.000</p>
-            <button data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20BagCharm%20Cleveland%20(Coklat%20Kopi%20%26%20Broken%20White)" data-message="Kamu akan di arahkan ke WhatsApp. Yakin?">Pesan via WA</button>
-          </div>
-        </article>
+    <!-- HERO SECTION -->
+    <section id="home" class="mt-[76px] md:mt-[88px] min-h-[85vh] bg-neo-bg bg-grid-pattern flex flex-col md:flex-row items-center justify-center p-6 md:p-12 gap-10 md:gap-16 border-b-5 border-black relative overflow-hidden">
 
-        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah produk baru -->
-        
-      </div>
-    </div>
-  </section>
+        <!-- Chaotic Background Elements -->
+        <div class="absolute top-20 right-10 w-32 h-32 bg-neo-pink rounded-full border-4 border-black shadow-brutal-lg hidden md:block z-0 animate-pulse"></div>
+        <div class="absolute bottom-20 left-10 text-neo-blue text-9xl font-black hidden md:block z-0 rotate-12 opacity-80">*</div>
 
-  <!-- SECTION: COSTUM BAGCHARM -->
-  <section id="costum">
-    <div class="section-wrapper">
-      <h2 class="sec-title"><!-- GANTI Judul Costum DI SINI -->Costum Bagcharm~</h2>
-      <p class="sec-sub"><!-- GANTI Subjudul Costum DI SINI -->Pilih warna tali, bentuk charm, dan gantungan nama kamu.</p>
-
-      <h3 style="margin-bottom:1rem;">Pilihan Warna Tali Makrame</h3>
-      <div class="card-grid" style="margin-bottom:1.5rem;">
-        <article class="card">
-          <img src="tali baby pink.png" alt="Tali Pink" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Warna DI SINI -->Baby Pink</h4>
-          </div>
-        </article>
-        <article class="card">
-          <img src="tali bone white.png" alt="Tali Bone White" />
-          <div class="card-body">
-            <h4>Bone White</h4>
-          </div>
-        </article>
-        <article class="card">
-          <img src="tali brown coffe.png" alt="Tali Brown" />
-          <div class="card-body">
-            <h4>Brown Coffe</h4>
-          </div>
-        </article>
-         <article class="card">
-          <img src="tali butter.png" alt="Tali Pink" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Warna DI SINI -->Yellow Butter</h4>
-          </div>
-        </article>
-         <article class="card">
-          <img src="tali magenta.png" alt="Tali Dark Magenta" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Warna DI SINI -->Dark Magenta</h4>
-          </div>
-        </article>
-         <article class="card">
-          <img src="tali mustard.png" alt="Orange Mustard" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Warna DI SINI -->Orange Mustard</h4>
-          </div>
-        </article>
-         <article class="card">
-          <img src="tali baby blue.png" alt="Baby Blue" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Warna DI SINI -->Baby Blue</h4>
-          </div>
-        </article>
-         <article class="card">
-          <img src="tali dark blue.png" alt="Dark Blue" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Warna DI SINI -->Dark Blue</h4>
-          </div>
-        </article>
-        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah warna tali baru -->
-        
-      </div>
-
-      <h3 style="margin-bottom:1rem;">Pilihan Bentuk BagCharm~</h3>
-      <h4>Campur 3 Jenis (Main Item, Sub Item, dan Mini Add On)</h4>
-      <div class="card-grid" style="margin-bottom:1.5rem;">
-        <article class="card">
-          <img src="model 1.jpg" alt="Bentuk 1" />
-          <div class="card-body">
-            <h4>[B3]</h4>
-            <small>Sub Item [B3].</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 2.jpg" alt="Bentuk 2" />
-          <div class="card-body">
-            <h4>[A3]</h4>
-            <small>Main Item [A3].</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 3.jpg" alt="Bentuk 3" />
-          <div class="card-body">
-            <h4>[B1]</h4>
-            <small>Sub Item [B1].</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 4.jpg" alt="Bentuk 4" />
-          <div class="card-body">
-            <h4>[C1]</h4>
-            <small>Mini Add on [C1]</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 5.jpg" alt="Bentuk 5" />
-          <div class="card-body">
-            <h4>[A1]</h4>
-            <small>Main Item [A1]</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 6.jpg" alt="Bentuk 6" />
-          <div class="card-body">
-            <h4>[C2]</h4>
-            <small>Mini Add On [C2]</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 7.jpg" alt="Bentuk 7" />
-          <div class="card-body">
-            <h4>[A2]</h4>
-            <small>Main Item [A2]</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="model 8.jpg" alt="Bentuk 8" />
-          <div class="card-body">
-            <h4>[B2]</h4>
-            <small>Sub Item [B2]</small>
-          </div>
-        </article>
-        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah bentuk baru -->
-        
-      </div>
-
-      <!-- BAGIAN BARU: PILIHAN CHARM (DITAMBAHKAN) -->
-      <h3 style="margin-bottom:1rem;">Pilihan Charm (Manik/Gantungan)~</h3>
-      <div class="card-grid" style="margin-bottom:1.5rem;">
-        <article class="card">
-          <img src="charm 1.jpg" alt="Charm 1" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 1</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, Merah dam Hijau.</small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="charm 2.jpg" alt="Charm 2" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 2</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Pink, Biru, Sunny, dan Ungu. (Labubu hannya 1)  </small>
-          </div>
-        </article>
-        <article class="card">
-          <img src="charm 3.jpg" alt="Charm 3" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 3</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, dan Pink</small>
-          </div>
-        </article>
-         <article class="card">
-          <img src="charm 4.jpg" alt="Charm 4" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 4</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, dan Pink.</small>
-          </div>
-        </article>
-         <article class="card">
-          <img src="Charm 5.jpg" alt="Charm 5" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 5</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, dan Pink.</small>
-          </div>
-        </article>
-         <article class="card">
-          <img src="Charm 6.jpg" alt="Charm 6" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 6</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, Merah dam Hijau.</small>
-          </div>
-        </article>
-         <article class="card">
-          <img src="Charm 7.jpg" alt="Charm 7" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 7</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, dan Pink</small>
-          </div>
-        </article>
-         <article class="card">
-          <img src="Charm 8.jpg" alt="Charm 8" />
-          <div class="card-body">
-            <h4><!-- GANTI Nama Charm DI SINI -->Charm 8</h4>
-            <small><!-- GANTI Deskripsi Charm DI SINI -->Tersedia Warna :Ungu, Biru, Kuning, dan Pink.</small>
-          </div>
-        </article>
-        <!-- GAMPANG NAMBAH ITEM: Copy <article class="card">...</article> di atas dan paste di sini untuk nambah pilihan charm baru -->
-        
-      </div>
-
-      <button class="btn-wa" data-confirm data-url=https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20Custom%20BagCharm%20dengan%20warna%20tali%20[___%20%26%20___]%2C%20bentuk%20seperti%20[___]%2C%20dan%20charm%20[___].%20Terima%20kasihh~~
-" data-message="Kamu akan kirim custom ke WA. Lanjut?">Kirim Brief Custom via WA</button>
-    </div>
-  </section>
-
-  <!-- SECTION: CARA ORDER -->
-  <section id="caraorder" style="background: rgba(223,200,255,.12);">
-    <div class="section-wrapper">
-      <h2 class="sec-title"><!-- GANTI Judul Cara Order DI SINI -->Cara Order</h2>
-      <p class="sec-sub"><!-- GANTI Subjudul Cara Order DI SINI -->Cara Pemesanan Yang Mudah dan Simple</p>
-      <div class="steps">
-        <div class="step">
-          <div class="badge">1</div>
-          <h4>Pilih katalog di website</h4>
-          <p><!-- GANTI Isi Step 1 DI SINI -->Scroll ke bagian katalog atau custom lalu pilih model/Costom yang kamu mau.</p>
+        <!-- Teks Hero -->
+        <div class="w-full md:w-1/2 flex flex-col items-start z-10">
+            <div class="bg-black text-neo-yellow border-4 border-black px-4 py-2 mb-6 inline-block font-mono font-bold text-sm uppercase tracking-widest shadow-brutal-sm rotate-2">
+                // 100% HANDMADE BAGCHARM
+            </div>
+            <h1 class="font-heading font-black text-6xl md:text-7xl lg:text-8xl leading-[0.9] mb-6 uppercase tracking-tighter">
+                MAKE IT <br>
+                <span class="bg-neo-pink text-white px-4 inline-block -rotate-2 border-4 border-black shadow-brutal mt-2">CHARM,</span><br> SHOW IT.
+            </h1>
+            <p class="font-sans font-bold text-lg md:text-2xl mb-8 max-w-lg border-l-8 border-black pl-4 py-2 bg-white/80">
+                Pesan sekarang, bikin bagcharm lucu sesuai style kamu. Aksen premium, dan bebas custom.
+            </p>
+            <div class="flex flex-wrap gap-4 font-mono font-bold uppercase w-full sm:w-auto">
+                <a href="#katalog" class="brutal-btn bg-neo-yellow text-black px-8 py-4 text-base w-full sm:w-auto text-center">
+                    LIHAT KATALOG
+                </a>
+                <button class="brutal-btn bg-black text-white px-8 py-4 text-base w-full sm:w-auto hover:bg-neo-blue hover:text-black" data-confirm data-url="https://wa.me/6289525465737" data-message="Gass ke WA buat pesan?">
+                    ORDER NOW ➔
+                </button>
+            </div>
         </div>
-        <div class="step">
-          <div class="badge">2</div>
-          <h4>Klik "Pesan via WhatsApp"</h4>
-          <p><!-- GANTI Isi Step 2 DI SINI -->Klik Pesan Via Whatsapp atau klik Tombol Kirim Brief ke WA</p>
+
+        <!-- Gambar Hero -->
+        <div class="w-full md:w-1/2 flex justify-center z-10 relative mt-10 md:mt-0">
+            <!-- Dekorasi isolasi/tape -->
+            <div class="absolute -top-4 -left-4 w-24 h-8 bg-neo-yellow/80 backdrop-blur-sm border-2 border-black z-20 -rotate-12"></div>
+            <div class="absolute -bottom-6 -right-6 w-32 h-10 bg-neo-blue/80 backdrop-blur-sm border-2 border-black z-20 rotate-6"></div>
+
+            <div class="bg-white border-5 border-black p-3 shadow-brutal-lg max-w-[450px] w-full rotate-3 hover:-rotate-1 transition-all duration-300">
+                <img src="canva pink.png" alt="Bagcharm LoopLine" class="w-full aspect-square object-cover border-4 border-black" />
+                <div class="font-mono font-black text-center py-3 uppercase text-lg bg-black text-white mt-3 border-2 border-black">
+                    AESTHETIC COLLECTION_
+                </div>
+            </div>
         </div>
-        <div class="step">
-          <div class="badge">3</div>
-          <h4>Isi format otomatis</h4>
-          <p><!-- GANTI Isi Step 3 DI SINI -->Sebutkan varian, warna, serta isi draf jika ingin costom.</p>
+    </section>
+
+    <!-- SCROLLING MARQUEE -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            ✦ LOOPLINE BAGCHARM ✦ CUSTOM YOUR VIBE ✦ HANDMADE WITH LOVE ✦ STAND OUT FROM CROWD ✦ ✦ LOOPLINE BAGCHARM ✦ CUSTOM YOUR VIBE ✦ HANDMADE WITH LOVE ✦ STAND OUT FROM CROWD ✦
         </div>
-      </div>
     </div>
-  </section>
 
-  <!-- SECTION: FEEDBACK / SURVEY -->
-  <section id="feedback">
-    <div class="section-wrapper">
-      <h2 class="sec-title"><!-- GANTI Judul Feedback DI SINI -->Feedback / Survey</h2>
-      <p class="sec-sub"><!-- GANTI Isi Feedback DI SINI -->Halo LoopLiners, sudah pernah order? Tolong beri masukannya yaa supaya LoopLine makin rapi dan cepat responnya.</p>
-      <button class="btn-wa" data-confirm data-url="https://docs.google.com/forms/d/e/1FAIpQLSe2O-mVKtUzqP6AaJPRjv1vaajZqsn-bm-Pwle6FHFGz3mjyw/viewform" data-message="Kamu akan diarahkan ke Google Forms feedback. Apakah kamu yakin?">Isi Feedback Sekarang</button>
-      <p style="margin-top: .6rem; font-size: .8rem; color: #777;"> <!-- GANTI Info QR DI SINI --> Klik Tombol Isi Feedback atau Scan <strong>kode QR</strong> disamping yaa.</p>
+    <!-- ABOUT -->
+    <section id="about" class="py-20 md:py-32 px-6 bg-neo-blue border-b-5 border-black relative overflow-hidden">
+        <!-- Giant background typography -->
+        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-10 pointer-events-none overflow-hidden">
+            <span class="font-heading font-black text-[20rem] leading-none">ABOUT</span>
+        </div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="bg-white border-5 border-black p-8 md:p-12 shadow-brutal-lg transform -rotate-1">
+                <h2 class="font-heading font-black text-4xl md:text-6xl uppercase mb-6 inline-block bg-neo-yellow px-4 py-2 border-4 border-black shadow-brutal rotate-2">
+                    WHAT IS LOOPLINE?
+                </h2>
+                <p class="font-sans font-bold text-xl md:text-3xl leading-snug mt-4">
+                    LoopLine adalah brand aksesoris yang fokus pada bagcharm estetik, cute, dan bisa dikustomisasi sesuai karaktermu. Semua dibuat manual dengan bahan premium dan dikemas rapi.
+                </p>
+                <div class="mt-8 flex gap-4">
+                    <span class="bg-black text-white px-4 py-2 font-mono font-bold uppercase border-2 border-black">#HANDMADE</span>
+                    <span class="bg-neo-pink text-white px-4 py-2 font-mono font-bold uppercase border-2 border-black">#CUSTOM</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: KATALOG -->
+    <section id="katalog" class="py-20 md:py-32 px-6 bg-white border-b-5 border-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="font-heading font-black text-5xl md:text-7xl uppercase tracking-tighter mb-4">KATALOG INSTAN</h2>
+                    <p class="font-mono font-bold text-xl md:text-2xl bg-neo-pink text-white inline-block px-4 py-2 border-4 border-black shadow-brutal -rotate-1">
+                        Pilih. Klik. Bayar. Selesai.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+                <!-- Card 1 -->
+                <article class="brutal-card flex flex-col group">
+                    <div class="relative overflow-hidden border-b-4 border-black aspect-square">
+                        <img src="yellow.jpg" alt="Bagcharm Flutter Shy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                        <div class="absolute top-2 right-2 bg-neo-yellow border-4 border-black px-2 py-1 font-mono font-black text-xl rotate-6 shadow-brutal">Rp15K</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow bg-white">
+                        <h3 class="font-heading font-black text-3xl uppercase mb-2">FLUTTER SHY</h3>
+                        <p class="font-sans text-base font-bold mb-6 flex-grow border-l-4 border-neo-pink pl-3">Kuning lembut x pink pastel.</p>
+                        <button class="brutal-btn bg-black text-white w-full py-4 text-lg hover:bg-neo-yellow hover:text-black" data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20pesan%20BagCharm%20Flutter%20Shy">
+                            BELI SEKARANG
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="brutal-card flex flex-col group -rotate-1">
+                    <div class="relative overflow-hidden border-b-4 border-black aspect-square">
+                        <img src="biru.jpg" alt="Bagcharm Bubble Gum" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                        <div class="absolute top-2 right-2 bg-neo-blue border-4 border-black px-2 py-1 font-mono font-black text-xl -rotate-3 shadow-brutal">Rp15K</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow bg-white">
+                        <h3 class="font-heading font-black text-3xl uppercase mb-2">BUBBLE GUM</h3>
+                        <p class="font-sans text-base font-bold mb-6 flex-grow border-l-4 border-neo-blue pl-3">Biru langit x putih bersih.</p>
+                        <button class="brutal-btn bg-black text-white w-full py-4 text-lg hover:bg-neo-blue hover:text-black" data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20pesan%20BagCharm%20Bubble%20Gum">
+                            BELI SEKARANG
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="brutal-card flex flex-col group rotate-2">
+                    <div class="relative overflow-hidden border-b-4 border-black aspect-square">
+                        <img src="pink.jpg" alt="Bagcharm Pinky Bliss" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                        <div class="absolute top-2 right-2 bg-neo-pink text-white border-4 border-black px-2 py-1 font-mono font-black text-xl rotate-3 shadow-brutal">Rp15K</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow bg-white">
+                        <h3 class="font-heading font-black text-3xl uppercase mb-2">PINKY BLISS</h3>
+                        <p class="font-sans text-base font-bold mb-6 flex-grow border-l-4 border-neo-pink pl-3">Magenta berani x pink muda.</p>
+                        <button class="brutal-btn bg-black text-white w-full py-4 text-lg hover:bg-neo-pink hover:text-black" data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20pesan%20BagCharm%20Pinky%20Bliss">
+                            BELI SEKARANG
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="brutal-card flex flex-col group -rotate-2">
+                    <div class="relative overflow-hidden border-b-4 border-black aspect-square">
+                        <img src="coklat.jpg" alt="Bagcharm Cleveland" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                        <div class="absolute top-2 right-2 bg-white border-4 border-black px-2 py-1 font-mono font-black text-xl rotate-6 shadow-brutal">Rp15K</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow bg-white">
+                        <h3 class="font-heading font-black text-3xl uppercase mb-2">CLEVELAND</h3>
+                        <p class="font-sans text-base font-bold mb-6 flex-grow border-l-4 border-black pl-3">Coklat kopi x broken white.</p>
+                        <button class="brutal-btn bg-black text-white w-full py-4 text-lg hover:bg-white hover:text-black" data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20pesan%20BagCharm%20Cleveland">
+                            BELI SEKARANG
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: CUSTOM BAGCHARM -->
+    <section id="custom" class="py-20 md:py-32 px-6 bg-neo-pink border-b-5 border-black bg-grid-pattern">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- Judul -->
+            <div class="mb-16 bg-white p-8 md:p-12 border-5 border-black shadow-brutal-lg rotate-1 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <h2 class="font-heading font-black text-5xl md:text-7xl uppercase mb-2">CUSTOM RULES!</h2>
+                    <p class="font-mono font-bold text-xl md:text-2xl bg-black text-neo-yellow inline-block px-3 py-1">BUILD YOUR OWN CHARM.</p>
+                </div>
+                <div class="text-8xl font-black hidden lg:block">*</div>
+            </div>
+
+            <!-- Kategori 1: Warna Tali -->
+            <div class="mb-16 bg-white p-8 border-4 border-black shadow-brutal">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="bg-black text-white text-4xl font-heading font-black px-4 py-2 border-4 border-black shadow-brutal -rotate-3">1</span>
+                    <h3 class="font-heading font-black text-3xl md:text-4xl uppercase">WARNA TALI</h3>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali baby pink.png" alt="Baby Pink" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Baby Pink</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali bone white.png" alt="Bone White" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Bone White</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali brown coffe.png" alt="Brown Coffe" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Brown Coffe</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali butter.png" alt="Yellow Butter" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Yellow Butter</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali magenta.png" alt="Dark Magenta" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Dark Magenta</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali mustard.png" alt="Orange Mustard" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Mustard</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali baby blue.png" alt="Baby Blue" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Baby Blue</div>
+                    </article>
+                    <article class="border-4 border-black p-2 hover:bg-neo-yellow hover:-translate-y-2 transition-all cursor-crosshair">
+                        <img src="tali dark blue.png" alt="Dark Blue" class="w-full aspect-square object-cover border-2 border-black mb-2">
+                        <div class="font-mono font-bold text-xs text-center uppercase">Dark Blue</div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Kategori 2: Bentuk BagCharm (DIUPDATE MENJADI 2 LINE/4 KOLOM) -->
+            <div class="mb-16 bg-white p-8 border-4 border-black shadow-brutal">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="bg-neo-blue text-black text-4xl font-heading font-black px-4 py-2 border-4 border-black shadow-brutal rotate-3">2</span>
+                    <h3 class="font-heading font-black text-3xl md:text-4xl uppercase">BENTUK</h3>
+                </div>
+                <p class="font-mono font-bold text-sm md:text-base mb-8 uppercase bg-black text-white inline-block px-3 py-1">MIX 3 JENIS: MAIN + SUB + MINI ADD-ON</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+                    <!-- Bentuk Items - Baris 1 -->
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 1.jpg" alt="[B3]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">B3</h4><span class="bg-black text-white text-xs px-2 py-0.5 font-mono uppercase">Sub Item</span>
+                    </article>
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 2.jpg" alt="[A3]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">A3</h4><span class="bg-neo-pink text-white text-xs px-2 py-0.5 font-mono uppercase">Main Item</span>
+                    </article>
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 3.jpg" alt="[B1]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">B1</h4><span class="bg-black text-white text-xs px-2 py-0.5 font-mono uppercase">Sub Item</span>
+                    </article>
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 4.jpg" alt="[C1]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">C1</h4><span class="bg-neo-yellow text-black text-xs px-2 py-0.5 font-mono uppercase border border-black">Mini Add On</span>
+                    </article>
+                    <!-- Baris 2 -->
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 5.jpg" alt="[A1]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">A1</h4><span class="bg-neo-pink text-white text-xs px-2 py-0.5 font-mono uppercase">Main Item</span>
+                    </article>
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 6.jpg" alt="[C2]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">C2</h4><span class="bg-neo-yellow text-black text-xs px-2 py-0.5 font-mono uppercase border border-black">Mini Add On</span>
+                    </article>
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 7.jpg" alt="[A2]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">A2</h4><span class="bg-neo-pink text-white text-xs px-2 py-0.5 font-mono uppercase">Main Item</span>
+                    </article>
+                    <article class="border-4 border-black border-dashed p-3 hover:border-solid hover:bg-neo-blue transition-all text-center">
+                        <img src="model 8.jpg" alt="[B2]" class="w-full aspect-square object-cover border-2 border-black mb-3">
+                        <h4 class="font-heading font-black text-2xl">B2</h4><span class="bg-black text-white text-xs px-2 py-0.5 font-mono uppercase">Sub Item</span>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Kategori 3: Pilihan Charm -->
+            <div class="mb-16 bg-white p-8 border-4 border-black shadow-brutal">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="bg-neo-yellow text-black text-4xl font-heading font-black px-4 py-2 border-4 border-black shadow-brutal -rotate-6">3</span>
+                    <h3 class="font-heading font-black text-3xl md:text-4xl uppercase">CHARM ADD-ON</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Charm Items -->
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="charm 1.jpg" alt="Charm 1" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 01</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Merah, Hijau.</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="charm 2.jpg" alt="Charm 2" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 02</h4>
+                            <p class="font-mono text-sm font-bold">Pink, Biru, Sunny, Ungu. (Labubu 1)</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="charm 3.jpg" alt="Charm 3" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 03</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Pink.</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="charm 4.jpg" alt="Charm 4" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 04</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Pink.</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="Charm 5.jpg" alt="Charm 5" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 05</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Pink.</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="Charm 6.jpg" alt="Charm 6" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 06</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Merah, Hijau.</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="Charm 7.jpg" alt="Charm 7" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 07</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Pink.</p>
+                        </div>
+                    </article>
+                    <article class="border-4 border-black flex flex-col group hover:bg-black hover:text-white transition-colors">
+                        <img src="Charm 8.jpg" alt="Charm 8" class="w-full h-48 object-cover border-b-4 border-black">
+                        <div class="p-4">
+                            <h4 class="font-heading font-black text-2xl mb-1">CHARM 08</h4>
+                            <p class="font-mono text-sm font-bold">Ungu, Biru, Kuning, Pink.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Button WA Custom -->
+            <div class="text-center relative z-10">
+                <button class="brutal-btn bg-black text-neo-yellow hover:bg-neo-yellow hover:text-black font-heading font-black text-2xl md:text-4xl px-10 py-6 uppercase w-full shadow-brutal-lg transform rotate-1" data-confirm data-url="https://wa.me/6289525465737?text=Halo%20LoopLine%2C%20aku%20mau%20pesan%20Custom%20BagCharm%20dengan%20warna%20tali%20[___%20%26%20___]%2C%20bentuk%20seperti%20[___]%2C%20dan%20charm%20[___].%20Terima%20kasihh~~"
+                    data-message="Kirim Brief Custom ke WA LoopLine?">
+                    KIRIM BRIEF CUSTOM [WA] ➔
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: CARA ORDER -->
+    <section id="caraorder" class="py-20 md:py-32 px-6 bg-neo-green border-b-5 border-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-heading font-black text-6xl md:text-8xl uppercase mb-16 text-center text-black tracking-tighter">
+                HOW TO ORDER
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
+                <!-- Garis Penghubung (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-2 bg-black -translate-y-1/2 z-0"></div>
+
+                <!-- Step 1 -->
+                <div class="bg-white border-5 border-black p-8 shadow-brutal-lg relative z-10 transform -rotate-2 hover:rotate-0 transition-transform">
+                    <div class="absolute -top-8 -left-6 w-16 h-16 bg-neo-yellow border-4 border-black flex items-center justify-center font-heading font-black text-4xl shadow-brutal rotate-6">1</div>
+                    <h4 class="font-heading font-black text-3xl uppercase mb-4 mt-4">PILIH MODEL</h4>
+                    <p class="font-sans font-bold text-lg border-l-4 border-black pl-3">Scroll katalog instan atau racik sendiri di bagian custom.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white border-5 border-black p-8 shadow-brutal-lg relative z-10 transform rotate-2 hover:rotate-0 transition-transform mt-8 md:mt-0">
+                    <div class="absolute -top-8 -left-6 w-16 h-16 bg-neo-pink text-white border-4 border-black flex items-center justify-center font-heading font-black text-4xl shadow-brutal -rotate-6">2</div>
+                    <h4 class="font-heading font-black text-3xl uppercase mb-4 mt-4">KLIK ORDER</h4>
+                    <p class="font-sans font-bold text-lg border-l-4 border-black pl-3">Klik tombol WA besar yang bertebaran di web ini.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white border-5 border-black p-8 shadow-brutal-lg relative z-10 transform -rotate-1 hover:rotate-0 transition-transform mt-8 md:mt-0">
+                    <div class="absolute -top-8 -left-6 w-16 h-16 bg-neo-blue border-4 border-black flex items-center justify-center font-heading font-black text-4xl shadow-brutal rotate-12">3</div>
+                    <h4 class="font-heading font-black text-3xl uppercase mb-4 mt-4">ISI FORMAT</h4>
+                    <p class="font-sans font-bold text-lg border-l-4 border-black pl-3">Sebutkan detail, bayar, dan tunggu charm kamu datang!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FEEDBACK -->
+    <section id="feedback" class="py-24 px-6 bg-black text-white border-b-5 border-black relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <h2 class="font-heading font-black text-5xl md:text-7xl uppercase mb-6 text-neo-yellow">GIVE US FEEDBACK</h2>
+            <p class="font-mono font-bold text-xl mb-12 max-w-2xl mx-auto text-gray-300">
+                Pernah order? Bantu LoopLine jadi lebih baik & profesional. Isi survei kami sekarang.
+            </p>
+            <button class="brutal-btn bg-neo-purple text-black font-heading font-black text-2xl px-10 py-5 uppercase w-full md:w-auto hover:bg-white hover:text-black transform rotate-2" data-confirm data-url="https://docs.google.com/forms/d/e/1FAIpQLSe2O-mVKtUzqP6AaJPRjv1vaajZqsn-bm-Pwle6FHFGz3mjyw/viewform"
+                data-message="Buka Google Forms Feedback?">
+                ISI FORM FEEDBACK
+            </button>
+        </div>
+
+        <!-- Chaotic Background Pattern -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+            <svg width="100%" height="100%" xmlns="http://www.w300.org/2000/svg">
+                <defs>
+                    <pattern id="diagonal-stripes" width="40" height="40" patternTransform="rotate(45)">
+                        <rect width="20" height="40" fill="#ffffff"></rect>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#diagonal-stripes)"></rect>
+            </svg>
+        </div>
+    </section>
+
+    <!-- SECTION: KONTAK & LOKASI -->
+    <section id="kontak" class="py-20 md:py-32 px-6 bg-neo-yellow border-b-5 border-black">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="font-heading font-black text-5xl md:text-7xl uppercase mb-8">STALK US</h2>
+            <p class="font-mono font-bold text-2xl mb-12 bg-white inline-block px-4 py-2 border-4 border-black shadow-brutal rotate-1">
+                LOKASI: PNJ, BUSINESS CENTER
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <button class="brutal-btn bg-white px-8 py-4 font-heading text-2xl uppercase flex items-center justify-center gap-4 hover:bg-black hover:text-white" data-confirm data-url="https://maps.app.goo.gl/rZmL5Djc3o2s8so9A?g_st=aw" data-message="Buka Google Maps?">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>
+                    MAPS PNJ
+                </button>
+                <button class="brutal-btn bg-[#25D366] text-black px-8 py-4 font-heading text-2xl uppercase flex items-center justify-center gap-4 hover:bg-black hover:text-[#25D366]" data-confirm data-url="https://wa.me/6289525465737" data-message="Chat admin sekarang?">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.2 2.2z" fill="currentColor"/></svg>
+                    WHATSAPP
+                </button>
+                <button class="brutal-btn bg-neo-pink text-white px-8 py-4 font-heading text-2xl uppercase flex items-center justify-center gap-4 hover:bg-black" data-confirm data-url="https://www.instagram.com/loopline.charm" data-message="Buka Instagram @Loopline.charm?">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.602c-3.26 0-3.66.014-4.944.072C2.694.723.378 3.04.232 7.056.174 8.34.16 8.74.16 12s.014 3.66.072 4.944c.147 4.016 2.46 6.332 6.474 6.474 1.287.058 1.687.072 4.946.072s3.66-.014 4.944-.072c4.016-.147 6.332-2.46 6.474-6.474.058-1.287.072-1.687.072-4.946s-.014-3.66-.072-4.944C23.277 3.04 20.96 2.46 16.946.232C15.66.174 15.26.16 12 .16zm0 5.838a4.602 4.602 0 100 9.204 4.602 4.602 0 000-9.204zm0 7.503a2.902 2.902 0 110-5.804 2.902 2.902 0 010 5.804zM20.5 3.102a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z" fill="currentColor"/></svg>
+                    INSTAGRAM
+                </button>
+            </div>
+
+            <div class="mt-16 text-center">
+                <span class="font-mono font-black text-3xl bg-black text-white px-6 py-3 border-4 border-black shadow-brutal inline-block -rotate-2">
+                    LoopLine
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white text-black border-t-8 border-black px-6 py-12 md:py-16">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-8 border-b-5 border-black pb-10">
+
+            <div class="max-w-md">
+                <h3 class="font-heading font-black text-5xl uppercase mb-4 tracking-tighter">LOOPLINE</h3>
+                <p class="font-mono font-bold text-lg bg-neo-yellow inline-block p-2 border-2 border-black">
+                    MAKE YOUR CHARM. SHOW YOUR VIBE.
+                </p>
+            </div>
+
+            <div class="flex gap-4">
+                <a class="w-16 h-16 brutal-btn bg-neo-pink text-white flex items-center justify-center hover:bg-black hover:text-white" data-confirm data-url="https://www.instagram.com/loopline.charm" data-message="Buka IG?" aria-label="Instagram">
+                    <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.602c-3.26 0-3.66.014-4.944.072C2.694.723.378 3.04.232 7.056.174 8.34.16 8.74.16 12s.014 3.66.072 4.944c.147 4.016 2.46 6.332 6.474 6.474 1.287.058 1.687.072 4.946.072s3.66-.014 4.944-.072c4.016-.147 6.332-2.46 6.474-6.474.058-1.287.072-1.687.072-4.946s-.014-3.66-.072-4.944C23.277 3.04 20.96 2.46 16.946.232C15.66.174 15.26.16 12 .16zm0 5.838a4.602 4.602 0 100 9.204 4.602 4.602 0 000-9.204zm0 7.503a2.902 2.902 0 110-5.804 2.902 2.902 0 010 5.804zM20.5 3.102a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z"/></svg>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center mt-8 font-mono font-bold uppercase text-sm">
+            <p>© 2025 LOOPLINE</p>
+            <p class="bg-black text-white px-2 py-1 mt-4 md:mt-0">DESIGN BASE BY Lyhi</p>
+        </div>
+    </footer>
+
+    <!-- POPUP GLOBAL (EXTREME BRUTALIST ALERT) -->
+    <div class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[9999] p-4 backdrop-blur-md" id="confirmModal">
+        <div class="bg-neo-yellow border-8 border-black shadow-[16px_16px_0px_0px_#FF2A7A] w-full max-w-lg p-8 text-center transform rotate-2">
+            <div class="w-20 h-20 mx-auto bg-black text-white border-4 border-black flex items-center justify-center text-5xl mb-6 shadow-brutal font-heading font-black -rotate-6">
+                ?!
+            </div>
+            <h3 id="popupTitle" class="font-heading font-black text-4xl uppercase mb-4 tracking-tighter bg-white inline-block px-4 py-1 border-4 border-black">
+                SYSTEM WARNING
+            </h3>
+            <p id="popupMessage" class="font-mono font-bold text-xl text-black mb-10 bg-white/50 p-4 border-2 border-dashed border-black">
+                Kamu akan diarahkan keluar dari website. Apakah kamu yakin?
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 font-heading font-black text-2xl uppercase">
+                <button class="brutal-btn flex-1 bg-white py-4 hover:bg-black hover:text-white" id="popupCancel">BATAL</button>
+                <button class="brutal-btn flex-1 bg-neo-pink text-white py-4 hover:bg-neo-blue hover:text-black" id="popupOk">GAS TERUS!</button>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <!-- SECTION: KONTAK & LOKASI (DIUBAH DENGAN IKON SVG) -->
-  <section id="kontak" style="background: rgba(178,223,255,.25);">
-    <div class="section-wrapper">
-      <h2 class="sec-title"><!-- GANTI Judul Kontak DI SINI -->Kontak & Lokasi</h2>
-      <p class="sec-sub"><!-- GANTI Isi Kontak DI SINI -->Lokasi utama di PNJ, Business Center. Klik tombol di bawah untuk info lengkap.</p>
-      <div class="contact-buttons">
-        <!-- Emoji diganti SVG Ikon -->
-        <button data-confirm data-url="https://maps.app.goo.gl/rZmL5Djc3o2s8so9A?g_st=aw" data-message="Kamu akan diarahkan ke Google Maps lokasi LoopLine (PNJ, Business Center). Lanjut?">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-          Lokasi PNJ
-        </button>
-        <!-- Emoji diganti SVG Ikon -->
-        <button data-confirm data-url="https://wa.me/6289525465737" data-message="Kamu akan diarahkan ke WhatsApp admin LoopLine. Yakin?">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.2 2.2z"/></svg>
-          WhatsApp
-        </button>
-        <!-- Emoji diganti SVG Ikon -->
-        <button data-confirm data-url="https://www.instagram.com/loopline.charm" data-message="Akan dibuka Instagram @Loopline.charm. Lanjut?">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.602c-3.26 0-3.66.014-4.944.072C2.694.723.378 3.04.232 7.056.174 8.34.16 8.74.16 12s.014 3.66.072 4.944c.147 4.016 2.46 6.332 6.474 6.474 1.287.058 1.687.072 4.946.072s3.66-.014 4.944-.072c4.016-.147 6.332-2.46 6.474-6.474.058-1.287.072-1.687.072-4.946s-.014-3.66-.072-4.944C23.277 3.04 20.96 2.46 16.946.232C15.66.174 15.26.16 12 .16zm0 5.838a4.602 4.602 0 100 9.204 4.602 4.602 0 000-9.204zm0 7.503a2.902 2.902 0 110-5.804 2.902 2.902 0 010 5.804zM20.5 3.102a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z"/></svg>
-          Instagram
-        </button>
-        <!-- Emoji diganti SVG Ikon -->
-        <!-- Emoji diganti SVG Ikon -->
-        <button data-confirm data-url="#" data-message="Facebook LoopLine masih disiapkan. Terima kasih sudah cek.">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.69v-3.62h3.13V8.41c0-3.1 1.89-4.79 4.66-4.79 1.33 0 2.47.1 2.8.15v3.24h-1.9c-1.5 0-1.8.72-1.8 1.77v2.3h3.59l-.47 3.62h-3.12V24h5.78c.74 0 1.33-.59 1.33-1.32V1.32C24 .59 23.41 0 22.675 0z"/></svg>
-          Facebook
-        </button>
-      </div>
-      <p style="margin-top: 1.2rem; font-size: .85rem;">WA / Admin: <!-- GANTI Nomor WA DI SINI -->0895-2546-5737</p>
-    </div>
-  </section>
+    <script>
+        // Toggle Mobile Nav
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
 
-  <!-- FOOTER (DIUBAH) -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-brand">
-        <h3 style="color:#fff; margin-bottom:.4rem;">LoopLine</h3>
-        <p style="margin:0;"> <!-- GANTI Deskripsi Pendek Footer DI SINI -->Brand aksesoris yang fokus pada bagcharm custom, estetik, dan pastinya ramah kantong.</p>
-      </div>
-      
-      <!-- Menu Cepat (DIHAPUS) -->
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex');
 
-      <!-- Menu Sosial diubah jadi Ikon -->
-      <div class="footer-socials">
-        <a data-confirm data-url="https://www.instagram.com/loopline.charm" data-message="Akan dibuka Instagram. Lanjut?" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.602c-3.26 0-3.66.014-4.944.072C2.694.723.378 3.04.232 7.056.174 8.34.16 8.74.16 12s.014 3.66.072 4.944c.147 4.016 2.46 6.332 6.474 6.474 1.287.058 1.687.072 4.946.072s3.66-.014 4.944-.072c4.016-.147 6.332-2.46 6.474-6.474.058-1.287.072-1.687.072-4.946s-.014-3.66-.072-4.944C23.277 3.04 20.96 2.46 16.946.232C15.66.174 15.26.16 12 .16zm0 5.838a4.602 4.602 0 100 9.204 4.602 4.602 0 000-9.204zm0 7.503a2.902 2.902 0 110-5.804 2.902 2.902 0 010 5.804zM20.5 3.102a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z"/></svg>
-        </a>
-        <a data-confirm data-url="#" data-message="Facebook masih Coming Soon." aria-label="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.69v-3.62h3.13V8.41c0-3.1 1.89-4.79 4.66-4.79 1.33 0 2.47.1 2.8.15v3.24h-1.9c-1.5 0-1.8.72-1.8 1.77v2.3h3.59l-.47 3.62h-3.12V24h5.78c.74 0 1.33-.59 1.33-1.32V1.32C24 .59 23.41 0 22.675 0z"/></svg>
-        </a>
-      </div>
-    </div>
-    <!-- Footer Bottom dibuat full-width di dalam footer -->
-    <div class="footer-bottom">
-      <p>© 2025 LoopLine | Made with Love 💗</p>
-      <p>Design base by LoopLine</p>
-    </div>
-  </footer>
+            // Ubah teks menu
+            if (navMenu.classList.contains('hidden')) {
+                menuToggle.textContent = 'MENU';
+                menuToggle.classList.replace('bg-neo-pink', 'bg-neo-yellow');
+                menuToggle.classList.replace('text-white', 'text-black');
+            } else {
+                menuToggle.textContent = 'CLOSE';
+                menuToggle.classList.replace('bg-neo-yellow', 'bg-neo-pink');
+                menuToggle.classList.replace('text-black', 'text-white');
+            }
+        });
 
-  <!-- POPUP GLOBAL -->
-  <div class="popup-backdrop" id="confirmModal">
-    <div class="popup">
-      <h3 id="popupTitle">Konfirmasi</h3>
-      <small id="popupMessage">Kamu akan diarahkan keluar dari website. Apakah kamu yakin?</small>
-      <div class="popup-actions">
-        <button class="btn-secondary" id="popupCancel">Batal</button>
-        <button class="btn-primary" id="popupOk">Lanjut</button>
-      </div>
-    </div>
-  </div>
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.add('hidden');
+                navMenu.classList.remove('flex');
+                menuToggle.textContent = 'MENU';
+                menuToggle.classList.replace('bg-neo-pink', 'bg-neo-yellow');
+                menuToggle.classList.replace('text-white', 'text-black');
+            });
+        });
 
-  <script>
-    // toggle mobile nav
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    menuToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
+        // Global Popup Handler
+        const modal = document.getElementById('confirmModal');
+        const msg = document.getElementById('popupMessage');
+        const btnCancel = document.getElementById('popupCancel');
+        const btnOk = document.getElementById('popupOk');
+        let targetUrl = '#';
 
-    // global popup handler
-    const modal = document.getElementById('confirmModal');
-    const msg = document.getElementById('popupMessage');
-    const btnCancel = document.getElementById('popupCancel');
-    const btnOk = document.getElementById('popupOk');
-    let targetUrl = '#';
+        document.addEventListener('click', function(e) {
+            const el = e.target.closest('[data-confirm]');
+            if (!el) return;
+            e.preventDefault();
 
-    document.addEventListener('click', function(e) {
-      const el = e.target.closest('[data-confirm]');
-      if (!el) return;
-      e.preventDefault();
-      const text = el.getAttribute('data-message') || 'Kamu akan diarahkan keluar dari website LoopLine. Lanjut?';
-      const url = el.getAttribute('data-url') || '#';
-      msg.textContent = text;
-      targetUrl = url;
-      modal.style.display = 'flex';
-    });
+            const text = el.getAttribute('data-message') || 'Kamu akan diarahkan keluar dari website LoopLine. Lanjut?';
+            const url = el.getAttribute('data-url') || '#';
 
-    btnCancel.addEventListener('click', () => {
-      modal.style.display = 'none';
-      targetUrl = '#';
-    });
-    btnOk.addEventListener('click', () => {
-      modal.style.display = 'none';
-      if (targetUrl && targetUrl !== '#') {
-        window.open(targetUrl, '_blank');
-      }
-    });
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-  </script>
+            msg.textContent = text;
+            targetUrl = url;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+
+        btnCancel.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            targetUrl = '#';
+        });
+
+        btnOk.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            if (targetUrl && targetUrl !== '#') {
+                window.open(targetUrl, '_blank');
+            }
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        });
+    </script>
 </body>
+
 </html>
